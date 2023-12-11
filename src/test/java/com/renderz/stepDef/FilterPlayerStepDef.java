@@ -1,6 +1,7 @@
 package com.renderz.stepDef;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.List;
@@ -9,12 +10,9 @@ import java.util.Set;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.Assert;
 
 import com.renderz.pageObj.FilterPlayer;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -29,16 +27,8 @@ public class FilterPlayerStepDef {
 
 	@Before
 	public void setup() {
-//		ChromeOptions co = new ChromeOptions();
-//		co.setBinary("/home/jit__04/all about JAVA/drivers/chrome-linux64/chrome.exe");
-//		driver = new ChromeDriver(co);
-//		--------------------------------
-//		ChromeOptions co = new ChromeOptions();
-//		co.addArguments("--headless=new");
-//		driver = new ChromeDriver(co);
-//		--------------------------------
 		ChromeOptions co = new ChromeOptions();
-		co.addExtensions(new File("/home/jit__04/all about JAVA/Extensions/AdBlock.crx"));
+		co.addExtensions(new File("E:\\EclipseWS\\projects\\Extensions\\AdBlock.crx"));
 		co.addArguments("--headless=new");
 		driver = new ChromeDriver(co);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
@@ -51,7 +41,8 @@ public class FilterPlayerStepDef {
 	}
 
 	@Given("User is on Renderz Players page with minOvr as {int} and maxOvr as {int}")
-	public void user_is_on_renderz_players_page_with_min_ovr_as_and_max_ovr_as(Integer minOvr, Integer maxOvr) throws InterruptedException {
+	public void user_is_on_renderz_players_page_with_min_ovr_as_and_max_ovr_as(Integer minOvr, Integer maxOvr)
+			throws InterruptedException {
 		String url = "https://renderz.app/24/players?" + "minOvr=" + minOvr + "&" + "maxOvr=" + maxOvr;
 		driver.get(url);
 		Set<String> windows = driver.getWindowHandles();
@@ -84,7 +75,7 @@ public class FilterPlayerStepDef {
 	}
 
 	@Then("Player details opens in a new tab")
-	public void player_details_opens_in_a_new_tab() throws InterruptedException {
+	public void player_details_opens_in_a_new_tab() throws InterruptedException, IOException {
 		filterPlayer.playerDetails();
 	}
 

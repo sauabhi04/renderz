@@ -1,6 +1,6 @@
 package com.renderz.stepDef;
 
-import java.util.List;
+import java.io.File;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,25 +16,27 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class LandingPageStepDef {
-	
+
 	private WebDriver driver;
 	private LandingPage landingPage;
-	private List<String> options;
-	
-	@Before 	//Hooks
+
+	@Before // Hooks
 	public void setup() {
-//		ChromeOptions co = new ChromeOptions();
-//		co.addArguments("--headless=new");
-//		driver = new ChromeDriver(co);
-		driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver", "E:\\EclipseWS\\drivers\\chromedriver.exe");
+		ChromeOptions co = new ChromeOptions();
+		co.setBinary("E:\\EclipseWS\\drivers\\chrome\\chrome.exe");
+		// co.addExtensions(new File("/home/jit__04/all
+		// aboutJAVA/Extensions/AdBlock.crx"));
+		co.addArguments("--headless=new");
+		driver = new ChromeDriver(co);
 	}
-	
-	@After 		//Hooks
+
+	@After // Hooks
 	public void tearDown() {
-		if(driver!=null)
+		if (driver != null)
 			driver.quit();
 	}
-	
+
 	@Given("User on the Renderz landing page")
 	public void user_on_the_renderz_landing_page() {
 		driver.get("https://renderz.app/");
@@ -52,22 +54,26 @@ public class LandingPageStepDef {
 		String actualTitle = landingPage.getTitle();
 		Assert.assertEquals(actualTitle, title, "Got Expected...");
 	}
-	
-	@Given("User hover on Players")
-	public void user_hover_on_players() throws InterruptedException {
-		options = landingPage.optionsOnHover();
-		System.out.print("--> " + options);
-	}
 
-	@When("User click on {string}")
-	public void user_click_on(String elementToCLick) throws InterruptedException {
-		landingPage.onClick(elementToCLick);
+	@Given("User clicks on Players tab")
+	public void user_clicks_on_players_tab() throws InterruptedException {
+		landingPage.onClick();
 	}
 
 	@Then("User redirects to {string} page")
 	public void user_redirects_to_page(String pageTitle) {
 		String actualTitle = landingPage.getPageTitle();
 		Assert.assertEquals(actualTitle, pageTitle, "Please check again...");
+	}
+
+	@When("User clicks on logo")
+	public void user_clicks_on_logo() throws InterruptedException {
+		landingPage.backToHome();
+	}
+
+	@Then("User redirects back to Home page")
+	public void user_redirects_back_to_home_page() {
+		System.out.println(landingPage.atHome());
 	}
 
 }
