@@ -21,6 +21,10 @@ public class LandingPage extends Utilities {
 	private By waitTillText = By.xpath("//h1[text()='FC 24']");
 	private By homeText = By.xpath("//h2[text()='Latest players']");
 	private By topAdBlock = By.cssSelector("img#clever_75815_topscroll_close");
+	
+	public void getWorkingWindow() throws InterruptedException {
+		backToWorkingTab();
+	}
 
 	public boolean isAppearing() {
 		return driver.findElement(logo).isDisplayed();

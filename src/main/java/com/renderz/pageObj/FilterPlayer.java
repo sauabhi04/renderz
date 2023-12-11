@@ -21,9 +21,6 @@ public class FilterPlayer extends Utilities {
 	private List<WebElement> filters;
 	private List<WebElement> positionsEle;
 	private List<WebElement> playersEle;
-//	private List<String> playerNames;
-//	private List<String> playerLowPrices;
-//	private List<String> playerHighPrices;
 	int count = 0;
 
 	public FilterPlayer(WebDriver driver) {
@@ -40,6 +37,10 @@ public class FilterPlayer extends Utilities {
 			.xpath("(//div[@class='market-data--value-mini flex items-center svelte-u8a1u7'] /span)[1]");
 	private By highPriceLoc = By
 			.xpath("(//div[@class='market-data--value-mini flex items-center svelte-u8a1u7'] /span)[3]");
+
+	public void getWorkingWindow() throws InterruptedException {
+		backToWorkingTab();
+	}
 
 	public List<String> collectCheckBoxes() {
 		filters = driver.findElements(filterCheckBoxes);
@@ -114,9 +115,6 @@ public class FilterPlayer extends Utilities {
 	}
 
 	public void playerDetails() throws InterruptedException, IOException {
-//		playerNames = new ArrayList<String>();
-//		playerLowPrices = new ArrayList<String>();
-//		playerHighPrices = new ArrayList<String>();
 		String player, lowPrice, highPrice;
 		Set<String> windows = driver.getWindowHandles();
 		int windowNos = windows.size(), currWindow = 1;
@@ -132,7 +130,6 @@ public class FilterPlayer extends Utilities {
 			driver.switchTo().window(playerpage);
 			Thread.sleep(2000);
 			player = driver.findElement(playerName).getText();
-//			playerNames.add(player);
 			ExcelWriteUtil.imprtToExcel(currWindow, 0, player);
 
 			try {
@@ -140,14 +137,12 @@ public class FilterPlayer extends Utilities {
 			} catch (Exception e) {
 				lowPrice = "0";
 			}
-//			playerLowPrices.add(lowPrice);
 			ExcelWriteUtil.imprtToExcel(currWindow, 1, lowPrice);
 			try {
 				highPrice = driver.findElement(highPriceLoc).getText();
 			} catch (Exception e) {
 				highPrice = "0";
 			}
-//			playerHighPrices.add(lowPrice);
 			ExcelWriteUtil.imprtToExcel(currWindow, 2, highPrice);
 
 			currWindow++;

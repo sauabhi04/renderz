@@ -6,7 +6,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(features = "src/test/resources/appFeatures/", 
-			glue = { "com.renderz.stepDef"/*, "com.renderz.hooks"*/ }, 
+			glue = { "com.renderz.stepDef", "com.renderz.hooks" }, 
 			//tags = "@RunOnly",
 			plugin = { "pretty", "html:target/reports" },
 			monochrome = true

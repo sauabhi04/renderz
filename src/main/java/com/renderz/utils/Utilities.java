@@ -1,6 +1,8 @@
 package com.renderz.utils;
 
 import java.time.Duration;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Utilities {
-	private WebDriver driver;
+	WebDriver driver;
 
 	public Utilities(WebDriver driver) { // Constructor
 		this.driver = driver;
@@ -21,6 +23,17 @@ public class Utilities {
 	
 	public static void backToWorkingWindow() {
 		
+	}
+	
+	public void backToWorkingTab() throws InterruptedException {
+		Set<String> windows = driver.getWindowHandles();
+		Iterator<String> itr = windows.iterator();
+		String workingPage = itr.next();
+		String adBlockPage = itr.next();
+		driver.switchTo().window(adBlockPage);
+		driver.close();
+		driver.switchTo().window(workingPage);
+		Thread.sleep(2000);
 	}
 
 }
