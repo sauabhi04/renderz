@@ -1,4 +1,4 @@
-package com.renderz.hooks;
+package com.renderz.renderzhooks;
 
 import java.util.Properties;
 
@@ -13,7 +13,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 
-public class Hooks {
+public class ReqHooks {
 	private WebDriver driver;
 	private DriverFactory driverFact;
 	private ConfigReader configReader;
@@ -34,12 +34,19 @@ public class Hooks {
 
 	@After(order = 0)
 	public void quitB() {
-		driver.quit();
+		driverFact = new DriverFactory();
+		String browserName = prop.getProperty("browser");
+		System.out.println("--------------------------------------");
+		driverFact.init_driver(browserName).quit();
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	}
 
 	@After(order = 1)
 	public void takeScreenShot(Scenario scenario) {
 		if (scenario.isFailed()) {
+			driverFact = new DriverFactory();
+			String browserName = prop.getProperty("browser");
+			driver = driverFact.init_driver(browserName);
 			String screenshotName = scenario.getName().replaceAll(" ", "_");
 			byte[] sourcePath = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 			scenario.attach(sourcePath, "image/png", screenshotName);

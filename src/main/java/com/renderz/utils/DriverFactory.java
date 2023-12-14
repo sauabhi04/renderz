@@ -18,9 +18,9 @@ public class DriverFactory {
 			EdgeOptions eo = new EdgeOptions();
 			eo.addArguments("--remote-allow-origins=*");
 			eo.addArguments("--incognito");
-			tlDriver.set(new EdgeDriver(eo));
+			tlDriver.set(new EdgeDriver());
 		} else if (browser.equals("chrome")) {
-			System.setProperty("webdriver.chrome.driver", "E:\\EclipseWS\\drivers\\chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", "E:\\EclipseWS\\drivers\\chromedriver\\chromedriver.exe");
 			ChromeOptions co = new ChromeOptions();
 			co.setBinary("E:\\EclipseWS\\drivers\\chrome\\chrome.exe");
 			co.addExtensions(new File("E:\\EclipseWS\\projects\\Extensions\\AdBlock.crx"));
